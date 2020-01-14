@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  postgresdb:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=database
+    volumes:
+      - ./db/postgres:/data/postgres
+    ports:
+      - 5432:5432
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+    environment:
+      NODE_ENV: development
+      JWT_KEY: secretKEYkeepTHIS
+    ports:
+      - 3001:3001
+    depends_on:
+      - postgresdb
+    volumes:
+      - ./:/server
+      - /server/node_modules
