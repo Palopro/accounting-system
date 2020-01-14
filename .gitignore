@@ -1,0 +1,7 @@
+.idea
+
+# node modules
+/backend/node_modules/
+
+# docker db
+/db/

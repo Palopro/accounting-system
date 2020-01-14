@@ -2,28 +2,14 @@ version: '3'
 
 services:
 
-  postgresdb:
-    image: postgres:12.1
+  mongo-dev:
+    image: mongo:latest
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=database
+      - MONGO_INITDB_ROOT_DATABASE=acc_system
+      - MONGO_INITDB_ROOT_USERNAME=mongo_user
+      - MONGO_INITDB_ROOT_PASSWORD=mongo_mongo
     volumes:
-      - ./db/postgres:/data/postgres
+      - ./db/mongo:/data/mongodb
     ports:
-      - 5432:5432
+      - 27017:27017
 
-  backend:
-    container_name: backend
-    build:
-      context: .
-    environment:
-      NODE_ENV: development
-      JWT_KEY: secretKEYkeepTHIS
-    ports:
-      - 3001:3001
-    depends_on:
-      - postgresdb
-    volumes:
-      - ./:/server
-      - /server/node_modules
